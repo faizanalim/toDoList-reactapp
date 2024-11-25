@@ -1,13 +1,21 @@
-export default function ({completedTodo,incompletedTodo})
-{
+import NewTodoForm from "./NewTodoForm";
+import TodoListItem from "./ToDoListItems"
 
-    return(
-<div>
-    <h1>My ToDos</h1>
-<p>New Todos form will go here...Create New</p>
-    <h3>Complete:</h3>
-    <h3>Incomplete:</h3>
-</div>
+export default function TodoList({ completedTodos, incompleteTodos }) {
+    console.log(completedTodos);
+    return (
+        <div>
+            <h1>My Todos</h1>
+            <NewTodoForm />
+            <h3>Completed:</h3>
+            {completedTodos.map((todo, index) => (
+                <TodoListItem todo={todo} key={index} />
+            ))}
+            <h3>Incomplete:</h3>
+            {incompleteTodos.map((todo, index) => (
+                <TodoListItem todo={todo} key={index} />
+            ))}
+        </div>
 
     )
 }
