@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadingCompleted } from "./loadingSlice";
 
 export const todosSlice = createSlice({
   name: "todos",
+  initialState: {
+    value: [],
+  },
+  /*   name: "todos",
   initialState: {
     value: [
       {
@@ -13,17 +18,17 @@ export const todosSlice = createSlice({
         isCompleted: false,
       },
     ],
-  },
+  }, */
   reducers: {
-    createTodo: (state, action) => {
-      state.value = [
-        ...state.value,
-        {
-          text: action.payload,
-          isCompleted: false,
-        },
-      ];
-    },
+    // createTodo: (state, action) => {
+    //   state.value = [
+    //     ...state.value,
+    //     {
+    //       text: action.payload,
+    //       isCompleted: false,
+    //     },
+    //   ];
+    // },
 
     markTodoAsCompleted: (state, action) => {
       const text = action.payload;
@@ -31,11 +36,20 @@ export const todosSlice = createSlice({
       todo.isCompleted = true;
     },
 
-    deleteTodo: (state, action) => {
-      const text = action.payload;
-      state.value = state.value.filter((t) => t.text != text);
+    // deleteTodo: (state, action) => {
+    //   const text = action.payload;
+    //   state.value = state.value.filter((t) => t.text != text);
+    // },
+    todosUpdated: (state, action) => {
+      const updatedTodos = action.payload;
+      state.value = updatedTodos;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(loadingCompleted, (state, action) => {
+      state.value = action.payload;
+    });
+  },
 });
-export const { createTodo, markTodoAsCompleted, deleteTodo } =
+export const { markTodoAsCompleted, deleteTodo, todosUpdated } =
   todosSlice.actions;
